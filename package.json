@@ -1,0 +1,21 @@
+{
+  "name": "run-bin",
+  "version": "0.0.1",
+  "description": "Launch scripts in node_modules/.bin/ from parent projects",
+  "bin": {
+    "run-bin": "run-bin.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dupski/run-bin.git"
+  },
+  "author": "Russell Briggs <runbin@paraflyer.net>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dupski/run-bin/issues"
+  },
+  "homepage": "https://github.com/dupski/run-bin",
+  "dependencies": {
+    "cross-spawn": "^5.1.0"
+  }
+}
