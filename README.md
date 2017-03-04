@@ -1,4 +1,4 @@
-# run-bin - Launch node_modules/.bin/ scripts from parent projects
+# run-bin - Launch `node_modules/.bin` scripts in parent projects
 
 ## Overview
 
@@ -23,8 +23,17 @@ top-level of youe monorepo (or any node_modules folder above that!)
 
 ```json
   "scripts": {
-    "build": "run-bin tsc"
+    "build": "run-bin tsc",
     "test": "run-bin mocha"
+  }
+```
+
+This package also includes the functionality available in `cross-env` so you
+can also pass environment variables to your processes as shown below:
+
+```json
+  "scripts": {
+    "build": "run-bin NODE_ENV=production webpack",
   }
 ```
 
