@@ -1,3 +1,5 @@
+var fs = require('fs');
+var path = require('path');
 var spawn = require('cross-spawn').spawn;
 
 var envSetterRegex = /(\w+)=('(.+)'|"(.+)"|(.+))/;
@@ -38,18 +40,33 @@ function getCommandArgsAndEnvVars(args) {
   };
 }
 
-function crossEnv(args) {
-  var c = getCommandArgsAndEnvVars(args);
-  if (c.command) {
-    var proc = spawn(c.command, c.commandArgs, {stdio: 'inherit', env: c.env});
+function findNodeBinCommand(dir, command) {
+  var cmdPath = path.join(dir, 'node_modules', '.bin', command);
+  if (fs.existsSync(cmdPath)) {
+    return cmdPath;
+  }
+  var parentDir = path.resolve(dir, '..');
+  if (parentDir != dir) {
+    return findNodeBinCommand(parentDir, command);
+  }
+  else {
+    return null;
+  }
+}
+
+var c = getCommandArgsAndEnvVars(process.argv.slice(2));
+
+if (c.command) {
+  var cmdPath = findNodeBinCommand(__dirname, c.command)
+  if (cmdPath) {
+    var proc = spawn(cmdPath, c.commandArgs, {stdio: 'inherit', env: c.env});
     process.on('SIGTERM', () => proc.kill('SIGTERM'));
     process.on('SIGINT', () => proc.kill('SIGINT'));
     process.on('SIGBREAK', () => proc.kill('SIGBREAK'));
     process.on('SIGHUP', () => proc.kill('SIGHUP'));
     proc.on('exit', process.exit);
-    return proc;
+  }
+  else {
+    console.error('Could not locate "'+c.command+'" in the project tree.');
   }
 }
-
-console.log(process.argv.slice(2));
-crossEnv(process.argv.slice(2));
