@@ -61,7 +61,7 @@ var c = getCommandArgsAndEnvVars(process.argv.slice(2));
 if (c.command) {
   var cmdPath = findNodeBinCommand(__dirname, c.command)
   if (cmdPath) {
-    var proc = spawn(cmdPath, c.commandArgs, {stdio: 'inherit', env: c.env});
+    var proc = spawn(cmdPath, c.commandArgs, {stdio: 'inherit', env: c.envVars});
     process.on('SIGTERM', () => proc.kill('SIGTERM'));
     process.on('SIGINT', () => proc.kill('SIGINT'));
     process.on('SIGBREAK', () => proc.kill('SIGBREAK'));
