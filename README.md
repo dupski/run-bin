@@ -43,6 +43,10 @@ Based on the awesome work by these fine folks:
 
  * [Kent C. Dodds: cross-env](https://github.com/kentcdodds/cross-env)
 
+## Related Projects
+
+ * [subpackage](https://github.com/dupski/subpackage)
+
 ## License
 
 MIT
